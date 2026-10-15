@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
-import { ArrowLeft, Bell, ChevronRight, Home, MapPin, Search, UserRound, CalendarCheck2, Image as ImageIcon, X, type LucideIcon } from 'lucide-react';
+import { ArrowLeft, Bell, BriefcaseMedical, ChevronRight, HeartHandshake, Home, Search, UserRound, CalendarCheck2, Image as ImageIcon, X, type LucideIcon } from 'lucide-react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 
 type ToastContextType = { notify: (message: string) => void };
@@ -19,7 +19,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 export const useToast = () => useContext(ToastContext);
 
 export function Logo() {
-  return <Link className="brand" to="/" aria-label="FDC Dental Clinic"><svg viewBox="0 0 32 32"><path d="M9 5c2.5-2 4.4.4 7 .4S20.5 3 23 5c4.8 4 1.6 9.5-.2 13.6C21 22.7 20 28 17.4 28c-1.8 0-1.4-6.5-3.1-6.5S13 28 11.2 28c-2.6 0-3.6-5.3-5.4-9.4C4 14.5.8 9 5.6 5c1-.8 2.2-.6 3.4 0Z" /></svg><span><strong>fdc</strong><small>dental clinic</small></span></Link>;
+  return <Link className="brand" to="/" aria-label="TemanCare"><span className="brand-mark"><HeartHandshake /></span><span><strong>TemanCare</strong><small>homecare tepercaya</small></span></Link>;
 }
 
 export function AppHeader() {
@@ -57,8 +57,8 @@ export function BottomNav() {
   const location = useLocation();
   const items = [
     { to: '/', label: 'Beranda', icon: Home },
-    { to: '/reservasi', label: 'Reservasi', icon: CalendarCheck2 },
-    { to: '/klinik', label: 'Klinik', icon: MapPin },
+    { to: '/layanan', label: 'Layanan', icon: BriefcaseMedical },
+    { to: '/pesanan', label: 'Pesanan', icon: CalendarCheck2 },
     { to: '/profil', label: 'Profil', icon: UserRound },
   ];
   return <nav className="bottom-nav" aria-label="Navigasi utama">{items.map(({ to, label, icon: Icon }) => <NavLink key={to} to={to} end={to === '/'} className={({ isActive }) => isActive ? 'active' : ''} aria-current={location.pathname === to ? 'page' : undefined}><Icon /><span>{label}</span></NavLink>)}</nav>;

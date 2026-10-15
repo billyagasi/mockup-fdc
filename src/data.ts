@@ -1,43 +1,25 @@
-import type { Clinic, Doctor, PriceItem } from './types';
+import { Baby, HeartPulse, House, PersonStanding, Stethoscope, UsersRound } from 'lucide-react';
+import type { Provider, Service } from './types';
 
-export const clinics: Clinic[] = [
-  { name: 'FDC Kuningan', city: 'Jakarta Selatan', address: 'Jl. Prof. Dr. Satrio No. 18', distance: '1,8 km', hours: '09.00–21.00' },
-  { name: 'FDC Tebet', city: 'Jakarta Selatan', address: 'Jl. Tebet Raya No. 42', distance: '3,2 km', hours: '09.00–21.00' },
-  { name: 'FDC Margonda', city: 'Depok', address: 'Jl. Margonda Raya No. 88', distance: '12 km', hours: '08.00–20.00' },
-  { name: 'FDC Dramaga', city: 'Bogor', address: 'Jl. Raya Dramaga No. 21', distance: '28 km', hours: '09.00–20.00' },
+export const money = (value: number) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(value);
+
+export const services: Service[] = [
+  { id: 'perawat', name: 'Perawatan Perawat di Rumah', shortName: 'Perawat', description: 'Pemantauan kondisi, obat, dan perawatan pascaklinis di rumah.', price: 150000, icon: Stethoscope, tone: 'green' },
+  { id: 'bidan', name: 'Kunjungan Bidan', shortName: 'Bidan', description: 'Pendampingan profesional untuk ibu, bayi, dan masa nifas.', price: 175000, icon: Baby, tone: 'pink' },
+  { id: 'pendamping', name: 'Pendamping Harian', shortName: 'Pendamping', description: 'Bantuan aktivitas harian dan teman beraktivitas di rumah.', price: 110000, icon: House, tone: 'blue' },
+  { id: 'lansia', name: 'Pendamping Lansia', shortName: 'Lansia', description: 'Pendamping tepercaya untuk rutinitas dan mobilitas lansia.', price: 125000, icon: PersonStanding, tone: 'yellow' },
+  { id: 'luka', name: 'Perawatan Luka', shortName: 'Perawatan Luka', description: 'Perawatan luka berkala oleh tenaga kesehatan terverifikasi.', price: 185000, icon: HeartPulse, tone: 'teal' },
+  { id: 'personal', name: 'Bantuan Personal', shortName: 'Bantuan Personal', description: 'Dukungan personal sesuai kebutuhan keluarga di rumah.', price: 100000, icon: UsersRound, tone: 'purple' },
 ];
 
-export const doctors: Doctor[] = [
-  { name: 'drg. Anisa Putri', specialty: 'Dokter Gigi Umum', clinic: 'FDC Kuningan', rating: 4.9, nextSlot: 'Hari ini, 16.30' },
-  { name: 'drg. Raka Mahendra, Sp.Ort', specialty: 'Spesialis Ortodonsia', clinic: 'FDC Tebet', rating: 4.9, nextSlot: 'Besok, 10.00' },
-  { name: 'drg. Nadia Kusuma', specialty: 'Dokter Gigi Umum', clinic: 'FDC Margonda', rating: 4.8, nextSlot: 'Hari ini, 18.00' },
-  { name: 'drg. Farhan Akbar, Sp.KG', specialty: 'Spesialis Konservasi Gigi', clinic: 'FDC Dramaga', rating: 4.9, nextSlot: 'Sabtu, 11.30' },
-];
-
-export const prices: PriceItem[] = [
-  { name: 'Konsultasi dokter gigi', category: 'Pemeriksaan', price: 'Mulai Rp75.000' },
-  { name: 'Scaling gigi', category: 'Perawatan', price: 'Mulai Rp250.000', note: 'Harga menyesuaikan kondisi karang gigi' },
-  { name: 'Tambal gigi', category: 'Perawatan', price: 'Mulai Rp300.000' },
-  { name: 'Bleaching', category: 'Estetik', price: 'Mulai Rp1.500.000' },
-  { name: 'Behel metal', category: 'Ortodonti', price: 'Mulai Rp4.500.000' },
-  { name: 'Cabut gigi', category: 'Tindakan', price: 'Mulai Rp350.000' },
-];
-
-export const promos = [
-  { title: 'Scaling lebih hemat', subtitle: 'Harga spesial untuk pasien baru', period: 's.d. 31 Desember', tone: 'green' },
-  { title: 'Paket senyum cerah', subtitle: 'Konsultasi dan bleaching', period: 'Kuota terbatas', tone: 'pink' },
-  { title: 'Kontrol behel bulanan', subtitle: 'Benefit ekstra untuk member', period: 'Khusus aplikasi', tone: 'yellow' },
+export const providers: Provider[] = [
+  { id: 'siti', name: 'Siti Rahma', initials: 'SR', role: 'Perawat', rating: 4.9, reviews: 128, distance: 1.2, experience: 4, price: 150000, skills: ['Perawatan di Rumah', 'Lansia', 'Pascaklinis'], availability: 'Tersedia sekarang' },
+  { id: 'nadia', name: 'Nadia Putri', initials: 'NP', role: 'Perawat', rating: 4.8, reviews: 89, distance: 1.8, experience: 6, price: 175000, skills: ['Perawatan Luka', 'Lansia', 'Pemantauan Obat'], availability: 'Tersedia hari ini' },
+  { id: 'maya', name: 'Maya Lestari', initials: 'ML', role: 'Pendamping', rating: 4.9, reviews: 64, distance: 2.4, experience: 5, price: 110000, skills: ['Pendamping Lansia', 'Mobilitas', 'Teman Harian'], availability: 'Tersedia pukul 20.00' },
 ];
 
 export const articles = [
-  { title: 'Kapan waktu yang tepat untuk periksa gigi?', category: 'Kesehatan Gigi', readTime: '4 menit' },
-  { title: 'Kenali tanda karang gigi yang perlu dibersihkan', category: 'Perawatan', readTime: '5 menit' },
-  { title: 'Panduan memilih sikat gigi untuk keluarga', category: 'Tips', readTime: '3 menit' },
-  { title: 'Hal yang perlu disiapkan sebelum memasang behel', category: 'Ortodonti', readTime: '6 menit' },
-];
-
-export const videos = [
-  { title: 'Cara sikat gigi yang benar', category: '#AskDentist', duration: '04:12' },
-  { title: 'Kenapa perlu rutin scaling?', category: '#MitosFakta', duration: '03:48' },
-  { title: 'Tur klinik dan fasilitas FDC', category: '#ClinicTour', duration: '02:56' },
+  { category: 'Perawatan Lansia', title: 'Menyiapkan rumah yang aman untuk orang tua', readTime: '5 menit' },
+  { category: 'Pascaklinis', title: 'Yang perlu dipantau setelah pulang dari rumah sakit', readTime: '4 menit' },
+  { category: 'Keluarga', title: 'Cara memilih caregiver yang tepat dan tepercaya', readTime: '6 menit' },
 ];

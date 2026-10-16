@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { AppLayout, ToastProvider } from './components';
-import { BookingPage, EducationPage, HomePage, JoinProviderPage, NotFoundPage, OrdersPage, ProfilePage, ProviderDashboardPage, ProviderDetailPage, ProviderRequestPage, ProvidersPage, RequestPage, ServicesPage } from './pages';
+import { BookingPage, EducationPage, HomePage, JoinProviderPage, MedicalRecordsPage, NotFoundPage, OrdersPage, ProfilePage, ProviderDashboardPage, ProviderDetailPage, ProviderRequestPage, ProvidersPage, RequestPage, ServicesPage } from './pages';
 
 export function App() {
   return <ToastProvider><AppLayout><Routes>
@@ -11,6 +11,7 @@ export function App() {
     <Route path="/pesan/:providerId" element={<BookingPage />} />
     <Route path="/permintaan" element={<RequestPage />} />
     <Route path="/pesanan" element={<OrdersPage />} />
+    <Route path="/rekam-medis" element={<MedicalRecordsPage />} />
     <Route path="/edukasi" element={<EducationPage />} />
     <Route path="/profil" element={<ProfilePage />} />
     <Route path="/gabung-provider" element={<JoinProviderPage />} />

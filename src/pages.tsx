@@ -1,5 +1,5 @@
 import { useMemo, useState, type FormEvent } from 'react';
-import { BadgeCheck, BriefcaseBusiness, CalendarCheck2, Check, ChevronRight, CircleDollarSign, Clock3, FileCheck2, HeartHandshake, History, House, Info, MapPin, MessageCircle, Navigation, Newspaper, Phone, Search, ShieldCheck, Sparkles, Star, Stethoscope, UserRound, UsersRound } from 'lucide-react';
+import { Activity, BadgeCheck, BriefcaseBusiness, CalendarCheck2, Check, ChevronDown, ChevronRight, CircleDollarSign, Clock3, Download, Droplets, FileCheck2, FileHeart, HeartHandshake, History, House, Info, MapPin, MessageCircle, Navigation, Newspaper, Pill, Phone, Search, ShieldCheck, Sparkles, Star, Stethoscope, Thermometer, UserRound, UsersRound } from 'lucide-react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { AppHeader, CardLink, Chip, EmptyState, PageHeader, PlaceholderMedia, SearchField, SectionHeader, StatusPill, useToast } from './components';
 import { articles, money, providers, services } from './data';
@@ -66,13 +66,51 @@ export function OrdersPage() {
   return <><PageHeader title="Pesanan Saya" subtitle="#TC10001" /><div className="page-content page-body"><article className="active-order"><div className="provider-card-head"><ProviderAvatar provider={providers[0]} /><div><StatusPill>{step === 4 ? 'Selesai' : 'Dikonfirmasi'}</StatusPill><h3>Perawatan Perawat di Rumah</h3><p>Siti Rahma · Hari ini, 19.00</p></div></div>{step === 1 && <div className="arrival-banner"><Navigation /><div><small>DALAM PERJALANAN</small><strong>Diperkirakan tiba 18 menit lagi</strong></div></div>}<div className="tracking-timeline">{journey.map((title, index) => <div key={title} className={index < step ? 'done' : index === step ? 'current' : ''}><span>{index < step ? <Check /> : index + 1}</span><div><strong>{title}</strong><p>{index <= step ? 'Status diperbarui' : 'Menunggu tahap sebelumnya'}</p></div></div>)}</div><div className="order-actions"><button className="button secondary" onClick={() => notify('Menghubungkan Anda dengan provider')}><Phone size={16} /> Hubungi</button><button className="button primary" onClick={() => setStep(Math.min(4, step + 1))}>{step === 4 ? 'Beri Penilaian' : 'Lanjutkan Demo'}</button></div></article><section className="past-order"><h2>Riwayat</h2><article><StatusPill tone="gray">Selesai</StatusPill><h3>Pendamping Lansia</h3><p>Nadia Putri · 2 Oktober 2026</p><strong>Rp235.000</strong></article></section></div></>;
 }
 
+const medicalRecords = [
+  {
+    id: 'RM-20261002', date: '2 Oktober 2026', time: '10.30', category: 'Perawatan',
+    title: 'Perawatan luka & pemantauan', provider: 'Nadia Putri, S.Kep', service: 'Kunjungan ke rumah',
+    note: 'Luka tampak bersih dan kering. Tidak ditemukan tanda infeksi. Ganti balutan dilanjutkan satu kali sehari.',
+    actions: ['Pembersihan luka', 'Penggantian balutan', 'Edukasi keluarga'],
+    medicine: 'NaCl 0,9% · sesuai kebutuhan', nextVisit: 'Kontrol berikutnya 9 Oktober 2026',
+  },
+  {
+    id: 'RM-20260925', date: '25 September 2026', time: '19.00', category: 'Pemantauan',
+    title: 'Pemantauan pascarawat inap', provider: 'Siti Rahma, A.Md.Kep', service: 'Perawatan perawat di rumah',
+    note: 'Kondisi umum stabil. Tekanan darah dalam rentang target dan pasien dapat beraktivitas ringan dengan pendampingan.',
+    actions: ['Pemeriksaan tanda vital', 'Pemantauan obat', 'Latihan mobilitas ringan'],
+    medicine: 'Amlodipine 5 mg · 1× sehari', nextVisit: 'Kontrol sesuai kebutuhan',
+  },
+  {
+    id: 'RM-20260918', date: '18 September 2026', time: '09.00', category: 'Konsultasi',
+    title: 'Asesmen awal perawatan', provider: 'Siti Rahma, A.Md.Kep', service: 'Asesmen kesehatan di rumah',
+    note: 'Asesmen kebutuhan harian selesai. Keluarga telah menerima rencana pendampingan dan panduan keselamatan di rumah.',
+    actions: ['Asesmen risiko jatuh', 'Tinjauan riwayat obat', 'Rencana perawatan'],
+    medicine: 'Tidak ada obat baru', nextVisit: 'Evaluasi 25 September 2026',
+  },
+];
+
+export function MedicalRecordsPage() {
+  const { notify } = useToast();
+  const [filter, setFilter] = useState('Semua');
+  const [expanded, setExpanded] = useState(medicalRecords[0].id);
+  const visibleRecords = filter === 'Semua' ? medicalRecords : medicalRecords.filter((record) => record.category === filter);
+  return <><PageHeader title="Rekam Medis" subtitle="Billy Saputra" action={<button className="icon-button" aria-label="Unduh ringkasan rekam medis" onClick={() => notify('Ringkasan rekam medis sedang disiapkan')}><Download size={19} /></button>} /><div className="page-content page-body medical-records-page">
+    <section className="patient-summary"><div className="patient-summary-top"><span className="patient-avatar">BS</span><div><small>PASIEN</small><h1>Billy Saputra</h1><p>Pria · 58 tahun · ID TC-01824</p></div><StatusPill>Aktif</StatusPill></div><div className="patient-facts"><div><Droplets /><span>Gol. darah<strong>O+</strong></span></div><div><ShieldCheck /><span>Alergi<strong>Penisilin</strong></span></div></div></section>
+    <div className="privacy-note"><ShieldCheck /><p>Hanya Anda dan provider yang diberi akses yang dapat melihat catatan ini.</p></div>
+    <section className="vital-section"><div className="medical-section-title"><div><span>HASIL TERAKHIR</span><h2>Tanda vital</h2></div><small>2 Okt 2026</small></div><div className="vital-grid"><article><Activity /><span>Tekanan darah</span><strong>128/82</strong><small>mmHg</small></article><article><Thermometer /><span>Suhu tubuh</span><strong>36,7</strong><small>°C</small></article><article><HeartHandshake /><span>Denyut nadi</span><strong>78</strong><small>bpm</small></article></div></section>
+    <section className="record-history"><div className="medical-section-title"><div><span>CATATAN PERAWATAN</span><h2>Riwayat kunjungan</h2></div><strong>{medicalRecords.length} catatan</strong></div><div className="chip-row medical-filter">{['Semua', 'Perawatan', 'Pemantauan', 'Konsultasi'].map((item) => <Chip key={item} active={filter === item} onClick={() => setFilter(item)}>{item}</Chip>)}</div><div className="medical-timeline">{visibleRecords.map((record) => { const isOpen = expanded === record.id; return <article key={record.id} className={isOpen ? 'open' : ''}><div className="record-marker"><FileHeart /></div><button className="record-summary" type="button" aria-expanded={isOpen} onClick={() => setExpanded(isOpen ? '' : record.id)}><div><span>{record.date} · {record.time}</span><h3>{record.title}</h3><p>{record.provider}</p></div><ChevronDown /></button>{isOpen && <div className="record-detail"><div className="record-id"><StatusPill tone="gray">{record.category}</StatusPill><span>{record.id}</span></div><p className="clinical-note">{record.note}</p><div className="record-detail-grid"><div><small>TINDAKAN</small>{record.actions.map((action) => <span key={action}><Check /> {action}</span>)}</div><div><small>OBAT & CATATAN</small><span><Pill /> {record.medicine}</span><span><CalendarCheck2 /> {record.nextVisit}</span></div></div><button className="record-download" onClick={() => notify(`Catatan ${record.id} sedang diunduh`)}><Download /> Unduh catatan kunjungan</button></div>}</article>; })}</div></section>
+    <div className="info-callout medical-disclaimer"><Info /><p>Catatan ini adalah ringkasan layanan TemanCare dan bukan pengganti diagnosis atau rekam medis fasilitas kesehatan.</p></div>
+  </div></>;
+}
+
 export function EducationPage() {
   const [query, setQuery] = useState(''); const filtered = articles.filter((a) => a.title.toLowerCase().includes(query.toLowerCase()));
   return <><PageHeader title="Edukasi Keluarga" subtitle="Panduan perawatan di rumah" /><div className="page-content page-body"><SearchField value={query} onChange={setQuery} placeholder="Cari panduan" /><div className="article-list education-list">{filtered.map((article) => <article key={article.title}><PlaceholderMedia className="article-list-media" label="PANDUAN"><House /></PlaceholderMedia><div><StatusPill tone="pink">{article.category}</StatusPill><h2>{article.title}</h2><p>Informasi praktis untuk membantu keluarga mendampingi orang tersayang.</p><small><Clock3 /> {article.readTime}</small></div></article>)}</div></div></>;
 }
 
 export function ProfilePage() {
-  return <><PageHeader title="Profil Saya" subtitle="Akun customer" /><div className="page-content page-body"><div className="profile-card"><span><UserRound /></span><div><h2>Billy</h2><p>0812 3456 7890<br />Antapani, Bandung</p></div></div><div className="settings-list"><CardLink to="/profil" icon={House} title="Alamat tersimpan" description="1 alamat perawatan" /><CardLink to="/provider" icon={HeartHandshake} title="Provider favorit" description="Lihat provider tersimpan" /><CardLink to="/pesanan" icon={History} title="Riwayat pesanan" description="Lihat layanan terdahulu" /><CardLink to="/gabung-provider" icon={BriefcaseBusiness} title="Beralih menjadi provider" description="Bantu keluarga di sekitar Anda" /></div><div className="info-callout"><ShieldCheck /><p>Data kesehatan sensitif hanya digunakan untuk keperluan layanan yang Anda minta.</p></div></div></>;
+  return <><PageHeader title="Profil Saya" subtitle="Akun customer" /><div className="page-content page-body"><div className="profile-card"><span><UserRound /></span><div><h2>Billy</h2><p>0812 3456 7890<br />Antapani, Bandung</p></div></div><div className="settings-list"><CardLink to="/rekam-medis" icon={FileHeart} title="Rekam medis" description="3 catatan perawatan tersimpan" /><CardLink to="/profil" icon={House} title="Alamat tersimpan" description="1 alamat perawatan" /><CardLink to="/provider" icon={HeartHandshake} title="Provider favorit" description="Lihat provider tersimpan" /><CardLink to="/pesanan" icon={History} title="Riwayat pesanan" description="Lihat layanan terdahulu" /><CardLink to="/gabung-provider" icon={BriefcaseBusiness} title="Beralih menjadi provider" description="Bantu keluarga di sekitar Anda" /></div><div className="info-callout"><ShieldCheck /><p>Data kesehatan sensitif hanya digunakan untuk keperluan layanan yang Anda minta.</p></div></div></>;
 }
 
 export function JoinProviderPage() {

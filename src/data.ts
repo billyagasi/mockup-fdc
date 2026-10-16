@@ -3,6 +3,20 @@ import type { Provider, Service } from './types';
 
 export const money = (value: number) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(value);
 
+export const customerProfile = {
+  id: 'TC-01824',
+  medicalRecordNumber: 'RM-01824',
+  name: 'Billy Saputra',
+  displayName: 'Billy',
+  initials: 'BS',
+  phone: '0812 3456 7890',
+  location: 'Antapani, Bandung',
+  sex: 'Pria',
+  age: 58,
+  bloodType: 'O+',
+  allergies: 'Penisilin',
+};
+
 export const services: Service[] = [
   { id: 'perawat', name: 'Perawatan Perawat di Rumah', shortName: 'Perawat', description: 'Pemantauan kondisi, obat, dan perawatan pascaklinis di rumah.', price: 150000, icon: Stethoscope, tone: 'green' },
   { id: 'bidan', name: 'Kunjungan Bidan', shortName: 'Bidan', description: 'Pendampingan profesional untuk ibu, bayi, dan masa nifas.', price: 175000, icon: Baby, tone: 'pink' },
